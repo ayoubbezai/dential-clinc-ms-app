@@ -1,19 +1,31 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import HomeHeader from "../../components/home/HomeHeader";
-import HomeDentist from "../../components/home/HomeDentist";
-import HomeServices from "../../components/home/HomeServices";
+import HomeHeader from "../components/home/HomeHeader";
+import HomeDentist from "../components/home/HomeDentist";
+import HomeServices from "../components/home/HomeServices";
 import { Tabs } from "expo-router";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 
-export default function HomeScreen() {
+const Home = () => {
   return (
     <View style={styles.container}>
       <HomeHeader />
       <HomeDentist />
       <HomeServices />
+
+      <Text style={styles.hi}>hi</Text>
+
+      <Tabs.Screen
+        name="login"
+        options={{
+          title: "login",
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={28} name="house.fill" color={color} />
+          ),
+        }}
+      />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -39,3 +51,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
+
+export default Home;
