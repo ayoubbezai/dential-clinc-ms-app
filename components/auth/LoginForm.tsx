@@ -7,16 +7,21 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
+  ActivityIndicator,
 } from "react-native";
 import PasswordInput from "./PasswordInput";
+import { AuthService } from "@/services/authServices";
+import { useRouter } from "expo-router";
+import { useAuth } from "@/context/AuthContext";
 
 const LoginForm = (): JSX.Element => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const router = useRouter();
+  const { login ,isLoading,error} = useAuth();
 
-  const handleLogin = () => {
-    console.log("Email:", email);
-    console.log("Password:", password);
+  const handleLogin = async () => {
+    await login(email, password);
   };
 
   return (
@@ -26,6 +31,7 @@ const LoginForm = (): JSX.Element => {
     >
       <View style={styles.form}>
         <Text style={styles.title}>Login to Your Account</Text>
+        {error ? <Text style={styles.errorText}>{error}</Text> : null}
         <View style={styles.inputsBox}>
           <TextInput
             placeholder="Enter your email"
@@ -37,8 +43,17 @@ const LoginForm = (): JSX.Element => {
             placeholderTextColor="#999"
           />
           <PasswordInput password={password} setPassword={setPassword} />
-          <TouchableOpacity style={styles.button} onPress={handleLogin}>
-            <Text style={styles.buttonText}>Login</Text>
+
+          <TouchableOpacity
+            style={[styles.button, isLoading && { opacity: 0.7 }]}
+            onPress={handleLogin}
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <Text style={styles.buttonText}>Login</Text>
+            )}
           </TouchableOpacity>
         </View>
       </View>
@@ -94,6 +109,12 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "700",
     fontSize: 16,
+  },
+  errorText: {
+    color: "red",
+    marginBottom: 10,
+    textAlign: "center",
+    fontSize: 14,
   },
 });
 

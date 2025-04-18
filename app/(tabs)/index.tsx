@@ -4,11 +4,16 @@ import HomeDentist from "../../components/home/HomeDentist";
 import HomeServices from "../../components/home/HomeServices";
 import { Tabs } from "expo-router";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+import useProtectedRoute from "@/hooks/useProtectedRoute";
+import { useAuth } from "@/context/AuthContext";
 
 export default function HomeScreen() {
+  useProtectedRoute();
+  const { user } = useAuth();
+  console.log("userinhome", user);
   return (
     <View style={styles.container}>
-      <HomeHeader />
+      <HomeHeader user={user} />
       <HomeDentist />
       <HomeServices />
     </View>

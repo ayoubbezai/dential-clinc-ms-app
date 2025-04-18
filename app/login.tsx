@@ -1,12 +1,12 @@
 import { StyleSheet, View, Image } from "react-native";
-import LoginForm from "../../components/auth/LoginForm";
+import LoginForm from "../components/auth/LoginForm";
 
 const Login = () => {
   return (
     <View style={styles.container}>
       <Image
         style={styles.image}
-        source={require("../../assets/images/react-logo.png")}
+        source={require("../assets/images/react-logo.png")}
       />
       <LoginForm />
     </View>

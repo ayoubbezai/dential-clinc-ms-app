@@ -1,11 +1,18 @@
+import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
+import { UserType } from "@/Types/alias";
 
-const HomeHeader = () => {
+type HomeHeaderProps = {
+  user: UserType | null;
+};
+
+const HomeHeader: React.FC<HomeHeaderProps> = ({ user }) => {
+  console.log("userinhead", user);
   return (
     <View style={styles.container}>
       <View>
         <Text style={styles.greeting}>Good Morning</Text>
-        <Text style={styles.username}>Ayoub Bezai</Text>
+        <Text style={styles.username}>{user?.name ?? "Guest"}</Text>
       </View>
       <Image
         style={styles.image}
