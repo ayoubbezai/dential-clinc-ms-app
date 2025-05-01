@@ -31,7 +31,11 @@ const HomeServices = () => {
   return (
     <View style={styles.wrapper}>
       <Text style={styles.title}>OurServices</Text>
-      <ScrollView horizontal={true} contentContainerStyle={styles.container}>
+      <ScrollView
+        horizontal={true}
+        contentContainerStyle={styles.container}
+        showsHorizontalScrollIndicator={false}
+      >
         {services.map((serv, index) => (
           <Card
             key={index}

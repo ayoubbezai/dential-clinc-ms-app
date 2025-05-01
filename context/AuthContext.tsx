@@ -1,4 +1,3 @@
-// context/authContext.tsx
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { getToken, saveToken, removeToken } from "@/utils/tokenStorage";
 import { AuthService } from "@/services/authServices";
@@ -63,6 +62,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setToken(null);
     router.replace("/login");
   };
+
+
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      if (!token) return;
+
+      try {
+        const { user, message } = await AuthService.getCurrentUser();
+        if (user) {
+          setUser(user);
+        } else {
+          console.warn("No user found:", message);
+        }
+      } catch (err) {
+        console.error("Failed to fetch current user", err);
+      }
+    };
+
+    fetchCurrentUser();
+  }, [token]); 
 
   return (
     <AuthContext.Provider

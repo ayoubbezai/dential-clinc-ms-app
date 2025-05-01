@@ -42,7 +42,7 @@ export const AuthService = {
 
   async getCurrentUser() {
     try {
-      const response = await api.get("/auth/me");
+      const response = await api.get("/auth/mobile/me");
       return {
         user: response.data?.user || null,
         message: "User fetched",
