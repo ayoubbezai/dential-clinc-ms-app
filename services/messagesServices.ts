@@ -20,4 +20,20 @@ export const messagesServices = {
       };
     }
   },
+  async sendMessage(reciver_id: number, message: string) {
+    try {
+      const response = await api.post("/sendMessage", {
+        reciver_id,
+        message,
+      });
+      console.log(response);
+      return { data: response.data, error: null };
+    } catch (error: any) {
+      console.log(error);
+      return {
+        data: null,
+        error: error.message || "Failed to send message",
+      };
+    }
+  },
 };

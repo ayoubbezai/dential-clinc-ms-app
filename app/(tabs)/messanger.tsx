@@ -17,22 +17,83 @@ import useMessages from "@/hooks/useMessages";
 import { MessageType } from "@/Types/alias";
 import Logo from "../../assets/logos/logo_1-removebg-preview.webp";
 import { styles } from "@/styles/messangerStyles";
+import { messagesServices } from "@/services/messagesServices";
+import { useAuth } from "@/context/AuthContext";
+import Pusher from "pusher-js";
 
 const Messenger = () => {
   const { messages, loading, error, pagination, setPage, addNewMessage } =
     useMessages();
-
+  const { user, token } = useAuth();
+  const user_id = Number(user?.id);
+  const patientId = user?.id;
   const [newMessage, setNewMessage] = useState("");
   const flatListRef = useRef<FlatList<MessageType>>(null);
   const isScrolling = useRef(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
+  useEffect(() => {
+    if (!token || !patientId) return;
+
+    const pusher = new Pusher("xs5n6ysk7wwrglkxyrle", {
+      wsHost: "192.168.1.8",
+      wsPort: 8080,
+      forceTLS: false,
+      enabledTransports: ["ws", "wss"],
+      authEndpoint: "http://192.168.1.8:8000/api/broadcasting/auth",
+      cluster: "",
+      auth: {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    });
+
+    const channel = pusher.subscribe(`private-chat.patient.${patientId}`);
+
+    channel.bind("pusher:subscription_succeeded", () => {
+      console.log(`✅ Subscribed to private-chat.patient.${patientId}`);
+    });
+
+    channel.bind("pusher:subscription_error", (err: any) => {
+      console.error("❌ Subscription error:", err);
+    });
+
+    channel.bind("message.sent", (data: any) => {
+      console.log("📩 New message received:", data);
+      if (data.message.reciver_id !== "clinc") {
+        const newMessage: MessageType = {
+          id: data.message.id,
+          message: data.message.message,
+          type: "received",
+          created_at: data.message.created_at,
+        };
+        addNewMessage(newMessage);
+      }
+    });
+
+    return () => {
+      channel.unbind_all();
+      channel.unsubscribe();
+    };
+  }, [token]);
+
   // Handle sending new message
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!newMessage.trim()) return;
+    const { data, error } = await messagesServices.sendMessage(
+      user_id,
+      newMessage
+    );
+
+    console.log(data);
+
+    if (error) {
+      throw new Error(error);
+    }
 
     const messageToSend: MessageType = {
-      id: Date.now().toString(),
+      id: data.data.id,
       message: newMessage,
       type: "sent",
       created_at: new Date().toISOString(),
