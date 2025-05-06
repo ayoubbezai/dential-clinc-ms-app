@@ -18,7 +18,7 @@ export const profileServices = {
            data: null,
            error: true,
            message:
-             error.response?.data?.message || "Faild to get Appointments",
+             error.response?.data?.message || "Faild to get profile",
          };
        }
     }

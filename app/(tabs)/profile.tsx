@@ -1,3 +1,4 @@
+import { useAuth } from "@/context/AuthContext";
 import useProfile from "@/hooks/useProfile";
 import React, { useState } from "react";
 import {
@@ -12,13 +13,14 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
-
 const Profile = () => {
   const { data, error, loading } = useProfile();
   const [selectedLanguage, setSelectedLanguage] = useState("English");
   const [showLanguageOptions, setShowLanguageOptions] = useState(false);
+  const { logout } = useAuth();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await logout();
     Alert.alert("Logout", "Are you sure you want to logout?", [
       {
         text: "Cancel",

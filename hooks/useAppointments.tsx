@@ -43,7 +43,7 @@ const useAppointments = () => {
   };
 
   useEffect(() => {
-    setPage(1); 
+    setPage(1);
   }, [status]);
 
   useEffect(() => {

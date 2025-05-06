@@ -19,3 +19,20 @@ export type ProfileType = {
   email?: string;
   patient?: PatientType;
 };
+
+export type MessageType = {
+  id: any;
+  message: string;
+  type: "sent" | "received";
+  created_at: string;
+};
+
+export type PaginationType = {
+  total: number;
+  per_page: number;
+  current_page: number;
+  last_page: number;
+  has_more_pages: boolean;
+  from: number;
+  to: number;
+};
