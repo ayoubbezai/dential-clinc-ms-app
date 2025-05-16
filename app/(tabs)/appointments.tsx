@@ -18,7 +18,7 @@ import { useLanguage } from "@/context/LanguageContext";
 const Appointments = () => {
   const { t, i18n } = useTranslation();
   const { isRTL } = useLanguage();
-  const styles = createStyles(isRTL); 
+  const styles = createStyles(isRTL);
 
   const {
     status,
@@ -93,6 +93,7 @@ const Appointments = () => {
           year: "numeric",
           month: "long",
           day: "numeric",
+          numberingSystem: "latn",
         })
       : "N/A";
 

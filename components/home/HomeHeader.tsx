@@ -20,11 +20,6 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ user }) => {
         <Text style={styles.greeting}>{t("home.good_morning")}</Text>
         <Text style={styles.username}>{user?.name ?? t("home.guest")}</Text>
       </View>
-      <Image
-        style={styles.bellImage}
-        source={require("../../assets/icons/bell_11088815.png")}
-        resizeMode="contain"
-      />
     </View>
   );
 };

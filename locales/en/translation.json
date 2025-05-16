@@ -23,11 +23,21 @@
     "check_dental_health": "Check your dental health today",
     "good_morning": "Good Morning",
     "guest": "Guest",
+    "view_more_tips": "View More Tips",
     "our_services": "Our Services",
     "service_dental_checkup": "Dental Checkup",
     "service_whitening": "Whitening",
     "service_braces": "Braces",
-    "service_cleaning": "Cleaning"
+    "service_cleaning": "Cleaning",
+    "dental_health_tips": "Dental Health Tips",
+    "tip_brush_twice": "Brush your teeth twice a day for 2 minutes",
+    "tip_floss_daily": "Floss daily to remove plaque between teeth",
+    "tip_limit_sugar": "Limit sugary foods and drinks",
+    "tip_regular_checkups": "Visit your dentist regularly for checkups",
+    "tip_replace_brush": "Replace your toothbrush every 3-4 months",
+    "tip_fluoride": "Use fluoride toothpaste for stronger enamel",
+    "tip_water": "Drink water after meals to clean teeth",
+    "tip_tongue": "Clean your tongue daily to remove bacteria"
   },
   "tab": {
     "home": "Home",

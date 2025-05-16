@@ -36,7 +36,7 @@ export const LanguageProvider = ({
   children: React.ReactNode;
 }) => {
   const [selectedLanguage, setSelectedLanguageState] =
-    useState<LanguageLabel>("العربية");
+    useState<LanguageLabel>("English");
   const [isRTL, setIsRTL] = useState(false);
   const { i18n } = useTranslation();
 

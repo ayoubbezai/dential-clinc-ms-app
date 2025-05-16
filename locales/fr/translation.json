@@ -23,11 +23,21 @@
     "check_dental_health": "Prenez soin de votre santé dentaire aujourd'hui",
     "good_morning": "Bonjour",
     "guest": "Invité",
+    "view_more_tips": "Voir plus de conseils",
     "our_services": "Nos Services",
     "service_dental_checkup": "Examen dentaire",
     "service_whitening": "Blanchiment",
     "service_braces": "Appareil dentaire",
-    "service_cleaning": "Nettoyage"
+    "service_cleaning": "Nettoyage",
+    "dental_health_tips": "Conseils pour la santé dentaire",
+    "tip_brush_twice": "Brossez-vous les dents deux fois par jour pendant 2 minutes",
+    "tip_floss_daily": "Utilisez du fil dentaire quotidiennement pour éliminer la plaque",
+    "tip_limit_sugar": "Limitez les aliments et boissons sucrés",
+    "tip_regular_checkups": "Consultez régulièrement votre dentiste",
+    "tip_replace_brush": "Changez votre brosse à dents tous les 3-4 mois",
+    "tip_fluoride": "Utilisez un dentifrice au fluorure pour un émail plus fort",
+    "tip_water": "Buvez de l'eau après les repas pour nettoyer les dents",
+    "tip_tongue": "Nettoyez votre langue quotidiennement pour éliminer les bactéries"
   },
   "tab": {
     "home": "Accueil",

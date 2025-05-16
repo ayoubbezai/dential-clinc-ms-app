@@ -14,6 +14,7 @@ export const createStyles = (isRTL: boolean) => {
       justifyContent: "space-between",
       alignItems: "center",
       paddingHorizontal: 22,
+      paddingTop: 30,
       paddingVertical: 14,
       marginTop: 3,
       marginBottom: 16,

@@ -23,11 +23,21 @@
     "check_dental_health": "افحص صحة أسنانك اليوم",
     "good_morning": "صباح الخير",
     "guest": "زائر",
+    "view_more_tips": "عرض المزيد من النصائح",
     "our_services": "خدماتنا",
     "service_dental_checkup": "فحص الأسنان",
     "service_whitening": "تبييض الأسنان",
     "service_braces": "تقويم الأسنان",
-    "service_cleaning": "تنظيف الأسنان"
+    "service_cleaning": "تنظيف الأسنان",
+    "dental_health_tips": "نصائح لصحة الأسنان",
+    "tip_brush_twice": "اغسل أسنانك مرتين يومياً لمدة دقيقتين",
+    "tip_floss_daily": "استخدم الخيط الطبي يومياً لإزالة البلاك",
+    "tip_limit_sugar": "قلل من الأطعمة والمشروبات السكرية",
+    "tip_regular_checkups": "قم بزيارة طبيب الأسنان بانتظام",
+    "tip_replace_brush": "غير فرشاة أسنانك كل 3-4 أشهر",
+    "tip_fluoride": "استخدم معجون أسنان يحتوي على الفلورايد لتقوية المينا",
+    "tip_water": "اشرب الماء بعد الوجبات لتنظيف الأسنان",
+    "tip_tongue": "نظف لسانك يومياً لإزالة البكتيريا"
   },
   "tab": {
     "home": "الرئيسية",
