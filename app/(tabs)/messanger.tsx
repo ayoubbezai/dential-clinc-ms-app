@@ -36,11 +36,11 @@ const Messenger = () => {
     if (!token || !patientId) return;
 
     const pusher = new Pusher("xs5n6ysk7wwrglkxyrle", {
-      wsHost: "192.168.1.8",
+      wsHost: "192.168.1.7",
       wsPort: 8080,
       forceTLS: false,
       enabledTransports: ["ws", "wss"],
-      authEndpoint: "http://192.168.1.8:8000/api/broadcasting/auth",
+      authEndpoint: "http://192.168.1.7:8000/api/broadcasting/auth",
       cluster: "",
       auth: {
         headers: {

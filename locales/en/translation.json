@@ -1,0 +1,11 @@
+{
+  "profile": {
+    "loadError": "Failed to load profile",
+    "name": "Name",
+    "age": "Age",
+    "gender": "Gender",
+    "phone": "Phone",
+    "language": "Language",
+    "logout": "Logout"
+  }
+}

@@ -1,10 +1,9 @@
 import { useAuth } from "@/context/AuthContext";
 import useProfile from "@/hooks/useProfile";
-import React, { useState } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import {
   View,
   Text,
-  StyleSheet,
   SafeAreaView,
   ActivityIndicator,
   ScrollView,
@@ -12,31 +11,40 @@ import {
   Alert,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { createStyles } from "@/styles/profileStyles";
+import { useTranslation } from "react-i18next";
+import { useLanguage } from "@/context/LanguageContext";
 
 const Profile = () => {
   const { data, error, loading } = useProfile();
-  const [selectedLanguage, setSelectedLanguage] = useState("English");
   const [showLanguageOptions, setShowLanguageOptions] = useState(false);
   const { logout } = useAuth();
+  const { t } = useTranslation();
+  const { selectedLanguage, setSelectedLanguage, isRTL } = useLanguage();
 
-  const handleLogout = async () => {
-    await logout();
-    Alert.alert("Logout", "Are you sure you want to logout?", [
+  const styles = useMemo(() => createStyles(isRTL), [isRTL]);
+  console.log("styles", styles?.container);
+
+  const handleLogout = () => {
+    Alert.alert(t("profile.logout"), t("profile.logoutConfirm"), [
       {
-        text: "Cancel",
+        text: t("cancel"),
         style: "cancel",
       },
       {
-        text: "Logout",
-        onPress: () => console.log("Logout pressed"),
+        text: t("profile.logout"),
+        onPress: async () => {
+          await logout();
+          console.log("User logged out");
+        },
       },
     ]);
   };
-
-  const selectLanguage = (language: string) => {
-    setSelectedLanguage(language);
+  const handleLanguageSelect = (languageLabel: string) => {
+    setSelectedLanguage(languageLabel as any);
     setShowLanguageOptions(false);
-    console.log("Language selected:", language);
+    console.log("Selected language:", languageLabel);
+    console.log("Is RTL:", isRTL);
   };
 
   if (loading) {
@@ -50,7 +58,7 @@ const Profile = () => {
   if (error) {
     return (
       <View style={styles.errorContainer}>
-        <Text style={styles.errorText}>Failed to load profile</Text>
+        <Text style={styles.errorText}>{t("profile.loadError")}</Text>
       </View>
     );
   }
@@ -69,11 +77,12 @@ const Profile = () => {
               </Text>
             </View>
           </View>
-          <Text style={styles.name}>{data?.name || "User Name"}</Text>
-          <Text style={styles.email}>{data?.email || "user@example.com"}</Text>
+          <Text style={styles.name}>
+            {data?.name || t("profile.nameFallback")}
+          </Text>
+          <Text style={styles.email}>{data?.email}</Text>
         </View>
 
-        {/* Compact Personal Information Section */}
         <View style={styles.section}>
           <View style={styles.infoCard}>
             <View style={styles.infoRow}>
@@ -83,8 +92,8 @@ const Profile = () => {
                 color="#34BCD4"
                 style={styles.infoIcon}
               />
-              <Text style={styles.infoLabel}>Name:</Text>
-              <Text style={styles.infoValue}>{data?.name || "Not "}</Text>
+              <Text style={styles.infoLabel}>{t("profile.name")}:</Text>
+              <Text style={styles.infoValue}>{data?.name || "N/A"}</Text>
             </View>
 
             <View style={styles.divider} />
@@ -96,7 +105,7 @@ const Profile = () => {
                 color="#34BCD4"
                 style={styles.infoIcon}
               />
-              <Text style={styles.infoLabel}>Age:</Text>
+              <Text style={styles.infoLabel}>{t("profile.age")}:</Text>
               <Text style={styles.infoValue}>
                 {data?.patient?.age || "N/A"}
               </Text>
@@ -111,7 +120,7 @@ const Profile = () => {
                 color="#34BCD4"
                 style={styles.infoIcon}
               />
-              <Text style={styles.infoLabel}>Gender:</Text>
+              <Text style={styles.infoLabel}>{t("profile.gender")}:</Text>
               <Text style={styles.infoValue}>
                 {data?.patient?.gender || "N/A"}
               </Text>
@@ -126,9 +135,9 @@ const Profile = () => {
                 color="#34BCD4"
                 style={styles.infoIcon}
               />
-              <Text style={styles.infoLabel}>Phone:</Text>
+              <Text style={styles.infoLabel}>{t("profile.phone")}:</Text>
               <Text style={styles.infoValue}>
-                {data?.patient?.phone || "Not provided"}
+                {data?.patient?.phone || t("profile.phoneFallback")}
               </Text>
             </View>
           </View>
@@ -146,7 +155,7 @@ const Profile = () => {
                 color="#34BCD4"
                 style={styles.infoIcon}
               />
-              <Text style={styles.infoLabel}>Language:</Text>
+              <Text style={styles.infoLabel}>{t("profile.language")}:</Text>
               <View style={styles.languageValueContainer}>
                 <Text style={styles.infoValue}>{selectedLanguage}</Text>
                 <Icon
@@ -165,21 +174,21 @@ const Profile = () => {
               <View style={styles.languageOptions}>
                 <TouchableOpacity
                   style={styles.languageOption}
-                  onPress={() => selectLanguage("English")}
+                  onPress={() => handleLanguageSelect("English")}
                 >
                   <Text style={styles.languageOptionText}>English</Text>
                 </TouchableOpacity>
                 <View style={styles.languageDivider} />
                 <TouchableOpacity
                   style={styles.languageOption}
-                  onPress={() => selectLanguage("French")}
+                  onPress={() => handleLanguageSelect("Français")}
                 >
                   <Text style={styles.languageOptionText}>Français</Text>
                 </TouchableOpacity>
                 <View style={styles.languageDivider} />
                 <TouchableOpacity
                   style={styles.languageOption}
-                  onPress={() => selectLanguage("Arabic")}
+                  onPress={() => handleLanguageSelect("العربية")}
                 >
                   <Text style={styles.languageOptionText}>العربية</Text>
                 </TouchableOpacity>
@@ -195,161 +204,11 @@ const Profile = () => {
             color="#FF5252"
             style={styles.logoutIcon}
           />
-          <Text style={styles.logoutText}>Logout</Text>
+          <Text style={styles.logoutText}>{t("profile.logout")}</Text>
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F8F9FA",
-  },
-  scrollContainer: {
-    paddingBottom: 20,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F8F9FA",
-  },
-  errorContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F8F9FA",
-  },
-  errorText: {
-    color: "#FF5252",
-    fontSize: 14,
-    fontWeight: "500",
-  },
-  header: {
-    alignItems: "center",
-    paddingVertical: 20,
-    backgroundColor: "#FFFFFF",
-    marginBottom: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: "#E9ECEF",
-    paddingTop: 60,
-  },
-  avatarContainer: {
-    marginBottom: 12,
-  },
-  avatarPlaceholder: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
-    backgroundColor: "#E3F2FD",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  avatar: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
-  },
-  avatarText: {
-    color: "#34BCD4",
-    fontSize: 28,
-    fontWeight: "bold",
-  },
-  name: {
-    fontSize: 18,
-    fontWeight: "600",
-    color: "#2C3E50",
-    marginBottom: 4,
-  },
-  email: {
-    fontSize: 14,
-    color: "#7F8C8D",
-    fontWeight: "400",
-  },
-  section: {
-    marginBottom: 16,
-    paddingHorizontal: 12,
-  },
-  infoCard: {
-    backgroundColor: "#FFFFFF",
-    borderRadius: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 3,
-    elevation: 2,
-  },
-  infoRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingVertical: 12,
-    paddingHorizontal: 12,
-  },
-  infoIcon: {
-    marginRight: 10,
-    width: 20,
-  },
-  infoLabel: {
-    fontSize: 14,
-    color: "#34495E",
-    fontWeight: "500",
-    width: 80,
-  },
-  infoValue: {
-    fontSize: 14,
-    color: "#7F8C8D",
-    fontWeight: "400",
-    flex: 1,
-  },
-  languageValueContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    flex: 1,
-    justifyContent: "flex-end",
-  },
-  divider: {
-    height: 1,
-    backgroundColor: "#ECF0F1",
-    marginHorizontal: 12,
-  },
-  languageOptions: {
-    paddingBottom: 8,
-  },
-  languageOption: {
-    paddingVertical: 10,
-    paddingHorizontal: 40,
-  },
-  languageOptionText: {
-    fontSize: 14,
-    color: "#34495E",
-  },
-  languageDivider: {
-    height: 1,
-    backgroundColor: "#ECF0F1",
-    marginHorizontal: 12,
-  },
-  logoutButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#FFFFFF",
-    borderRadius: 8,
-    paddingVertical: 12,
-    marginHorizontal: 12,
-    marginTop: 12,
-    borderWidth: 1,
-    borderColor: "#FFEBEE",
-  },
-  logoutIcon: {
-    marginRight: 8,
-  },
-  logoutText: {
-    color: "#FF5252",
-    fontSize: 14,
-    fontWeight: "500",
-  },
-});
 
 export default Profile;

@@ -1,0 +1,11 @@
+{
+  "profile": {
+    "loadError": "Échec du chargement du profil",
+    "name": "Nom",
+    "age": "Âge",
+    "gender": "Genre",
+    "phone": "Téléphone",
+    "language": "Langue",
+    "logout": "Déconnexion"
+  }
+}

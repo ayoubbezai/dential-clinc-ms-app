@@ -12,8 +12,10 @@ import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { AuthProvider } from "@/context/AuthContext";
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
+import { I18nextProvider } from "react-i18next";
+import i18n from "../i18n";
+import "../i18n";
+import { LanguageProvider } from "@/context/LanguageContext";
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -33,15 +35,21 @@ export default function RootLayout() {
   }
 
   return (
-    <AuthProvider>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="login" />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-        <StatusBar style="auto" />
-      </ThemeProvider>
-    </AuthProvider>
+    <I18nextProvider i18n={i18n}>
+      <AuthProvider>
+        <LanguageProvider>
+          <ThemeProvider
+            value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+          >
+            <Stack>
+              <Stack.Screen name="login" />
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="+not-found" />
+            </Stack>
+            <StatusBar style="auto" />
+          </ThemeProvider>
+        </LanguageProvider>
+      </AuthProvider>
+    </I18nextProvider>
   );
 }
