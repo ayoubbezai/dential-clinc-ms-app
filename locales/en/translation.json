@@ -6,6 +6,51 @@
     "gender": "Gender",
     "phone": "Phone",
     "language": "Language",
-    "logout": "Logout"
+    "logout": "Logout",
+    "cancel": "cancel",
+    "male": "male",
+    "female": "female"
+  },
+  "messenger": {
+    "loadError": "Failed to load messages",
+    "dentist": "Dentist",
+    "online": "Online",
+    "noMessages": "No messages yet",
+    "inputPlaceholder": "Type a message...",
+    "send": "Send"
+  },
+  "home": {
+    "check_dental_health": "Check your dental health today",
+    "good_morning": "Good Morning",
+    "guest": "Guest",
+    "our_services": "Our Services",
+    "service_dental_checkup": "Dental Checkup",
+    "service_whitening": "Whitening",
+    "service_braces": "Braces",
+    "service_cleaning": "Cleaning"
+  },
+  "tab": {
+    "home": "Home",
+    "messenger": "Messenger",
+    "appointments": "Appointments",
+    "profile": "Profile"
+  },
+  "appointment": {
+    "title": "Appointments",
+    "status": {
+      "pending": "Pending",
+      "completed": "Completed",
+      "cancelled": "Cancelled",
+      "rescheduled": "Rescheduled",
+      "scheduled": "Scheduled",
+      "unknown": "Unknown"
+    },
+    "tooth": "Tooth",
+    "content": "Content",
+    "error": "Something went wrong. Please try again.",
+    "empty": "No {{status}} appointments found."
+  },
+  "common": {
+    "retry": "Retry"
   }
 }

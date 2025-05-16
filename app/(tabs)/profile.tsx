@@ -26,13 +26,12 @@ const Profile = () => {
   console.log("styles", styles?.container);
 
   const handleLogout = () => {
-    Alert.alert(t("profile.logout"), t("profile.logoutConfirm"), [
+    Alert.alert(t("profile.logout"), " ", [
       {
-        text: t("cancel"),
+        text: t("profile.cancel"),
         style: "cancel",
       },
       {
-        text: t("profile.logout"),
         onPress: async () => {
           await logout();
           console.log("User logged out");
@@ -45,6 +44,15 @@ const Profile = () => {
     setShowLanguageOptions(false);
     console.log("Selected language:", languageLabel);
     console.log("Is RTL:", isRTL);
+  };
+  const getGenderLabel = (gender: string) => {
+    if (gender === "male") {
+      return t("profile.male");
+    }
+    if(gender === "female") {
+      return t("profile.female");
+    }
+    return t("N/A");
   };
 
   if (loading) {
@@ -122,7 +130,7 @@ const Profile = () => {
               />
               <Text style={styles.infoLabel}>{t("profile.gender")}:</Text>
               <Text style={styles.infoValue}>
-                {data?.patient?.gender || "N/A"}
+                {getGenderLabel(data?.patient?.gender || "N/A")}
               </Text>
             </View>
 

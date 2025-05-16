@@ -6,6 +6,51 @@
     "gender": "Genre",
     "phone": "Téléphone",
     "language": "Langue",
-    "logout": "Déconnexion"
+    "logout": "Déconnexion",
+    "cancel": "Annuler",
+    "male": "Homme",
+    "female": "Femme"
+  },
+  "messenger": {
+    "loadError": "Échec du chargement des messages",
+    "dentist": "Dentiste",
+    "online": "En ligne",
+    "noMessages": "Aucun message pour le moment",
+    "inputPlaceholder": "Tapez un message...",
+    "send": "Envoyer"
+  },
+  "home": {
+    "check_dental_health": "Prenez soin de votre santé dentaire aujourd'hui",
+    "good_morning": "Bonjour",
+    "guest": "Invité",
+    "our_services": "Nos Services",
+    "service_dental_checkup": "Examen dentaire",
+    "service_whitening": "Blanchiment",
+    "service_braces": "Appareil dentaire",
+    "service_cleaning": "Nettoyage"
+  },
+  "tab": {
+    "home": "Accueil",
+    "messenger": "Messagerie",
+    "appointments": "Rendez-vous",
+    "profile": "Profil"
+  },
+  "appointment": {
+    "title": "Rendez-vous",
+    "status": {
+      "pending": "En attente",
+      "completed": "Terminé",
+      "cancelled": "Annulé",
+      "rescheduled": "Replanifié",
+      "scheduled": "Planifié",
+      "unknown": "Inconnu"
+    },
+    "tooth": "Dent",
+    "content": "Contenu",
+    "error": "Une erreur est survenue. Veuillez réessayer.",
+    "empty": "Aucun rendez-vous {{status}} trouvé."
+  },
+  "common": {
+    "retry": "Réessayer"
   }
 }

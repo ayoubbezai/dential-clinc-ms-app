@@ -6,6 +6,51 @@
     "gender": "الجنس",
     "phone": "الهاتف",
     "language": "اللغة",
-    "logout": "تسجيل الخروج"
+    "logout": "تسجيل الخروج",
+    "cancel": "إلغاء",
+    "male": "ذكر",
+    "female": "أنثى"
+  },
+  "messenger": {
+    "loadError": "فشل في تحميل الرسائل",
+    "dentist": "طبيب الأسنان",
+    "online": "متصل",
+    "noMessages": "لا توجد رسائل بعد",
+    "inputPlaceholder": "اكتب رسالة...",
+    "send": "إرسال"
+  },
+  "home": {
+    "check_dental_health": "افحص صحة أسنانك اليوم",
+    "good_morning": "صباح الخير",
+    "guest": "زائر",
+    "our_services": "خدماتنا",
+    "service_dental_checkup": "فحص الأسنان",
+    "service_whitening": "تبييض الأسنان",
+    "service_braces": "تقويم الأسنان",
+    "service_cleaning": "تنظيف الأسنان"
+  },
+  "tab": {
+    "home": "الرئيسية",
+    "messenger": "الرسائل",
+    "appointments": "المواعيد",
+    "profile": "الملف الشخصي"
+  },
+  "appointment": {
+    "title": "المواعيد",
+    "status": {
+      "pending": "قيد الانتظار",
+      "completed": "مكتمل",
+      "cancelled": "ملغي",
+      "rescheduled": "معاد جدولته",
+      "scheduled": "مجدول",
+      "unknown": "غير معروف"
+    },
+    "tooth": "السن",
+    "content": "المحتوى",
+    "error": "حدث خطأ ما. حاول مرة أخرى.",
+    "empty": "لا توجد مواعيد {{status}}."
+  },
+  "common": {
+    "retry": "إعادة المحاولة"
   }
 }

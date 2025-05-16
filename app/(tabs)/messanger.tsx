@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import {
   FlatList,
   View,
@@ -16,10 +16,12 @@ import {
 import useMessages from "@/hooks/useMessages";
 import { MessageType } from "@/Types/alias";
 import Logo from "../../assets/logos/logo_1-removebg-preview.webp";
-import { styles } from "@/styles/messangerStyles";
 import { messagesServices } from "@/services/messagesServices";
 import { useAuth } from "@/context/AuthContext";
 import Pusher from "pusher-js";
+import { useTranslation } from "react-i18next";
+import { useLanguage } from "@/context/LanguageContext";
+import { createStyles } from "@/styles/messangerStyles";
 
 const Messenger = () => {
   const { messages, loading, error, pagination, setPage, addNewMessage } =
@@ -31,6 +33,11 @@ const Messenger = () => {
   const flatListRef = useRef<FlatList<MessageType>>(null);
   const isScrolling = useRef(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
+
+  const { t } = useTranslation();
+  const { isRTL } = useLanguage();
+
+  const styles = useMemo(() => createStyles(isRTL), [isRTL]);
 
   useEffect(() => {
     if (!token || !patientId) return;
@@ -60,7 +67,6 @@ const Messenger = () => {
     });
 
     channel.bind("message.sent", (data: any) => {
-      console.log("📩 New message received:", data);
       if (data.message.reciver_id !== "clinc") {
         const newMessage: MessageType = {
           id: data.message.id,
@@ -78,15 +84,13 @@ const Messenger = () => {
     };
   }, [token]);
 
-  // Handle sending new message
   const handleSend = async () => {
     if (!newMessage.trim()) return;
+
     const { data, error } = await messagesServices.sendMessage(
       user_id,
       newMessage
     );
-
-    console.log(data);
 
     if (error) {
       throw new Error(error);
@@ -103,18 +107,15 @@ const Messenger = () => {
     setNewMessage("");
   };
 
-  // Handle scroll to load more messages when user reaches top
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const { contentOffset } = event.nativeEvent;
     isScrolling.current = true;
 
-    // Load more when within 100px of top and not already loading
     if (contentOffset.y > 100 && pagination?.has_more_pages && !isLoadingMore) {
       loadMoreMessages();
     }
   };
 
-  // Function to load more messages
   const loadMoreMessages = () => {
     if (isLoadingMore || !pagination?.has_more_pages) return;
 
@@ -122,7 +123,6 @@ const Messenger = () => {
     setPage((prev) => prev + 1);
   };
 
-  // Handle scroll end
   const handleScrollEnd = () => {
     isScrolling.current = false;
   };
@@ -131,7 +131,6 @@ const Messenger = () => {
     setIsLoadingMore(false);
   }, [messages]);
 
-  // Loading state for messages
   if (loading && !messages.length) {
     return (
       <View style={styles.loadingContainer}>
@@ -143,12 +142,11 @@ const Messenger = () => {
   if (error) {
     return (
       <View style={styles.errorContainer}>
-        <Text style={styles.errorText}>Failed to load messages</Text>
+        <Text style={styles.errorText}>{t("messenger.loadError")}</Text>
       </View>
     );
   }
 
-  // Render each message in the list
   const renderMessage = ({ item }: { item: MessageType }) => (
     <View
       style={[
@@ -163,11 +161,14 @@ const Messenger = () => {
         ]}
       >
         <Text
-          style={item.type === "sent" ? styles.sentText : styles.receivedText}
+          style={[
+            item.type === "sent" ? styles.sentText : styles.receivedText,
+            { textAlign: isRTL ? "right" : "left" },
+          ]}
         >
           {item.message}
         </Text>
-        <Text style={styles.timeText}>
+        <Text style={item.type === "sent" ? styles.timeText : styles.timeText2}>
           {new Date(item.created_at).toLocaleTimeString([], {
             hour: "2-digit",
             minute: "2-digit",
@@ -179,7 +180,6 @@ const Messenger = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header with user info */}
       <View style={styles.header}>
         <View style={styles.userInfo}>
           <View style={styles.avatar}>
@@ -190,20 +190,18 @@ const Messenger = () => {
             />
           </View>
           <View>
-            <Text style={styles.userName}>Dentist</Text>
-            <Text style={styles.status}>Online</Text>
+            <Text style={styles.userName}>{t("messenger.dentist")}</Text>
+            <Text style={styles.status}>{t("messenger.online")}</Text>
           </View>
         </View>
       </View>
 
-      {/* Top loading spinner */}
       {isLoadingMore && (
         <View style={styles.loadingMoreContainer}>
           <ActivityIndicator size="small" color="#34BCD4" />
         </View>
       )}
 
-      {/* Message list */}
       <FlatList
         ref={flatListRef}
         data={messages}
@@ -216,27 +214,20 @@ const Messenger = () => {
         contentContainerStyle={styles.messagesContainer}
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
-            <Text style={styles.emptyText}>No messages yet</Text>
+            <Text style={styles.emptyText}>{t("messenger.noMessages")}</Text>
           </View>
         }
-        // Prevent scroll jumping to bottom when new data is loaded
-        onContentSizeChange={() => {
-          if (!isScrolling.current) {
-            // Do nothing to prevent jumping to the bottom
-          }
-        }}
       />
 
-      {/* Input and send message area */}
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.inputContainer}
       >
         <TextInput
-          style={styles.input}
+          style={[styles.input, { textAlign: isRTL ? "right" : "left" }]}
           value={newMessage}
           onChangeText={setNewMessage}
-          placeholder="Type a message..."
+          placeholder={t("messenger.inputPlaceholder")}
           placeholderTextColor="#999"
           multiline
         />
@@ -245,7 +236,7 @@ const Messenger = () => {
           onPress={handleSend}
           disabled={!newMessage.trim()}
         >
-          <Text style={styles.sendButtonText}>Send</Text>
+          <Text style={styles.sendButtonText}>{t("messenger.send")}</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
     </SafeAreaView>
