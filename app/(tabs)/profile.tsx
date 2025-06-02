@@ -14,9 +14,9 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { createStyles } from "@/styles/profileStyles";
 import { useTranslation } from "react-i18next";
 import { useLanguage } from "@/context/LanguageContext";
-
 const Profile = () => {
   const { data, error, loading } = useProfile();
+  console.log("Profile data:", data);
   const [showLanguageOptions, setShowLanguageOptions] = useState(false);
   const { logout } = useAuth();
   const { t } = useTranslation();
@@ -49,7 +49,7 @@ const Profile = () => {
     if (gender === "male") {
       return t("profile.male");
     }
-    if(gender === "female") {
+    if (gender === "female") {
       return t("profile.female");
     }
     return t("N/A");
@@ -63,13 +63,13 @@ const Profile = () => {
     );
   }
 
-  if (error) {
-    return (
-      <View style={styles.errorContainer}>
-        <Text style={styles.errorText}>{t("profile.loadError")}</Text>
-      </View>
-    );
-  }
+  // if (error) {
+  //   return (
+  //     <View style={styles.errorContainer}>
+  //       <Text style={styles.errorText}>{t("profile.loadError")}</Text>
+  //     </View>
+  //   );
+  // }
 
   return (
     <SafeAreaView style={styles.container}>

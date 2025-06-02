@@ -12,6 +12,7 @@ const useProfile = () => {
     setError(null);
     try {
       const response = await profileServices.getProfile();
+      console.log("Profile response:", response);
 
       if (response.error) {
         setError(response.message);
